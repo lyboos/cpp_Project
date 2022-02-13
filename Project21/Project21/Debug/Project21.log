@@ -1,0 +1,4 @@
+﻿  源.c
+C:\Users\ASUS\Desktop\南京大学\c代码】\Project21\Project21\源.c(19,7): warning C4048: “int (*)[3]”和“int (*)[5]”数组的下标不同
+C:\Users\ASUS\Desktop\南京大学\c代码】\Project21\Project21\源.c(20,9): warning C4477: “printf”: 格式字符串“%p”需要类型“void *”的参数，但可变参数 1 拥有了类型“int”
+  Project21.vcxproj -> C:\Users\ASUS\Desktop\南京大学\c代码】\Project21\Debug\Project21.exe

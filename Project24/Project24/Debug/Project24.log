@@ -1,0 +1,5 @@
+﻿  源.c
+C:\Users\ASUS\Desktop\南京大学\c代码】\Project24\Project24\源.c(18,9): warning C4477: “printf”: 格式字符串“%x”需要类型“unsigned int”的参数，但可变参数 1 拥有了类型“int *”
+C:\Users\ASUS\Desktop\南京大学\c代码】\Project24\Project24\源.c(18,9): warning C4477: “printf”: 格式字符串“%x”需要类型“unsigned int”的参数，但可变参数 2 拥有了类型“int *”
+C:\Users\ASUS\Desktop\南京大学\c代码】\Project24\Project24\源.c(18,9): warning C4477: “printf”: 格式字符串“%x”需要类型“unsigned int”的参数，但可变参数 3 拥有了类型“int *”
+  Project24.vcxproj -> C:\Users\ASUS\Desktop\南京大学\c代码】\Project24\Debug\Project24.exe

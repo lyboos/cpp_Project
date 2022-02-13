@@ -1,0 +1,4 @@
+﻿  源2.c
+C:\Users\ASUS\Desktop\南京大学\代码】\Project6\Project6\源2.c(1,1): warning C4005: “_CRT_SECURE_NO_WARNINGS”: 宏重定义
+C:\Users\ASUS\Desktop\南京大学\代码】\Project6\Project6\源2.c : message : 参见“_CRT_SECURE_NO_WARNINGS”的前一个定义
+  Project6.vcxproj -> C:\Users\ASUS\Desktop\南京大学\代码】\Project6\Debug\Project6.exe

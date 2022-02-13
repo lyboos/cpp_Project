@@ -1,0 +1,5 @@
+﻿E:\学习资料\vc2019\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(491,5): warning MSB8028: 中间目录(Debug\)包含从另一个项目(Project25.vcxproj)共享的文件。   这会导致错误的清除和重新生成行为。
+  源.c
+C:\Users\ASUS\Desktop\南京大学\c代码】\Project25\Project25\源.c(28): warning C4716: “strcat”: 必须返回一个值
+C:\Users\ASUS\Desktop\南京大学\c代码】\Project25\Project25\源.c(16): warning C4716: “strcpy”: 必须返回一个值
+  Project25.vcxproj -> C:\Users\ASUS\Desktop\南京大学\c代码】\Project25\Debug\Project string.exe
