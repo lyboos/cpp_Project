@@ -139,7 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="socketClient.c" />
+    <ClCompile Include="socket_test.c" />
     <ClCompile Include="源.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="socketClient.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

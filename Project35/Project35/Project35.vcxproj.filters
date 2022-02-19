@@ -18,5 +18,16 @@
     <ClCompile Include="源.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="socketClient.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="socket_test.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="socketClient.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
