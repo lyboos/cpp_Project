@@ -27,16 +27,16 @@ void select_sort(int* a, int len) {
 	}
 }
 
-int main() {
-	/*printf("lyboos/n");
-	system("pause");*/
-	//—°‘Ò≈≈–Ú
-	int a[] = { 33,56,74,21,45,85,69,3 };
-	int len = sizeof(a) / sizeof(a[0]);
-	int i = 0;
-	print_array(a, len);
-	printf("\n");
-	select_sort(a, len);
-	print_array(a, len);
-	return 0;
-}
+//int main() {
+//	/*printf("lyboos/n");
+//	system("pause");*/
+//	//—°‘Ò≈≈–Ú
+//	int a[] = { 33,56,74,21,45,85,69,3 };
+//	int len = sizeof(a) / sizeof(a[0]);
+//	int i = 0;
+//	print_array(a, len);
+//	printf("\n");
+//	select_sort(a, len);
+//	print_array(a, len);
+//	return 0;
+//}

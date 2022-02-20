@@ -144,6 +144,7 @@
     <ClCompile Include="源.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="header.h" />
     <ClInclude Include="socketClient.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
