@@ -69,7 +69,43 @@ void freebuf(char* buf)
 	free(buf);
 	buf = NULL;
 }
+//·Ö¸î×Ö·û´®£¬STRING.split
+int spitString(const char* src,char sub_c,char buf[10][30],int* count) {
+	if (src == NULL || count == NULL) return -1;
+	const char* start = src;
+	int n = 0;
+	char* p = NULL;
+	do
+	{
+		p = strchr(start, sub_c);
+		if (p != NULL) {
+			int length = p - start;
+			if (length > 0) {
+				strncpy(buf[n], start, p - start);
+				buf[n][length] = 0;
+				n++;
+			}
+			start = p + 1;
+		}
+		else {
+			strcpy(buf[n],start);
+			break;
+		}
+	} while (*start!='\0');
+	*count = n;
+	if (n == 0) return -2;
+	return 0;
+}
 int main() {
+	const char* src = "abcd,asd,dasaws,adedsw";
+	char buf[10][30] = { 0 };
+	int n = 0, ret = 0;
+	ret = spitString(src,',',buf,&n);
+	if(ret==0)
+	for (int i = 0; i < n; i++)
+	{
+		printf("%s\n", buf[i]);
+	}
 	/*printf("sb out");
 	char p[] = {'0','1','2','\0'};
 	printf("%s", p);*/
@@ -79,21 +115,23 @@ int main() {
 	
 	/*char* p1[3] = { "111","222","000" };
 	char p2[3][3] = { "333","555","444" };*/
-	char* src = "abcd754yg4t8uhj8abcd";
-	char* buf = NULL;
-	int ret = replaceSubstr(src,&buf,"abcd","qqqq");
-	if (ret != 0) {
-		printf("replacement error:%d", ret);
-		system("pause");
-		return ret;
-	}
-	printf("origin:%s\n", src);
-	printf("new:%s\n\n", buf);
-	
-	//freebuf(buf);
-	/*if (buf != NULL) {
-		free(buf);
-		buf = NULL;
-	}*/
+
+
+	//char* src = "abcd754yg4t8uhj8abcd";
+	//char* buf = NULL;
+	//int ret = replaceSubstr(src,&buf,"abcd","qqqq");
+	//if (ret != 0) {
+	//	printf("replacement error:%d", ret);
+	//	system("pause");
+	//	return ret;
+	//}
+	//printf("origin:%s\n", src);
+	//printf("new:%s\n\n", buf);
+	//
+	////freebuf(buf);
+	///*if (buf != NULL) {
+	//	free(buf);
+	//	buf = NULL;
+	//}*/
 	return 0;
 }
