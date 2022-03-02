@@ -142,6 +142,7 @@
     <ClCompile Include="socketClient.c" />
     <ClCompile Include="socket_test.c" />
     <ClCompile Include="源.c" />
+    <ClCompile Include="源.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h" />
