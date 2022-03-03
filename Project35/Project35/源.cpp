@@ -7,25 +7,104 @@
 using namespace std;
 
 int main() {
-    int n;
-    cin >> n;
-    char* dict[5000];
-    for (int i = 0; i < n; i++)
-    {
-        cin>>*dict[i];
+    string pszSource;
+    char temp;
+    while (cin.get(temp)) {
+        pszSource = pszSource + temp;
     }
+    string output;
+    int nByteSrc = pszSource.size();
+    const char* enkey = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    std::string pszEncode(nByteSrc * 4 / 3 + 4, '\0');
+    int nLoop = nByteSrc % 3 == 0 ? nByteSrc : nByteSrc - 3;
+    int n = 0;
+    int i = 0;
+    for ( i = 0; i < nLoop; i += 3)
+    {
+           pszEncode[n] = enkey[pszSource[i] >> 2];
+               pszEncode[n + 1] = enkey[((pszSource[i] & 3) << 4) | ((pszSource[i + 1] & 0xF0) >> 4)];
+                pszEncode[n + 2] = enkey[((pszSource[i + 1] & 0x0f) << 2) | ((pszSource[i + 2] & 0xc0) >> 6)];
+                 pszEncode[n + 3] = enkey[pszSource[i + 2] & 0x3F];
+              n += 4;
+    }
+   
+    switch (nByteSrc % 3)
+    {
+            case 0:
+                     pszEncode[n] = '\0';
+                     break;
+            
+             case 1:
+                     pszEncode[n] = enkey[pszSource[i] >> 2];
+                     pszEncode[n + 1] = enkey[((pszSource[i] & 3) << 4) | ((0 & 0xf0) >> 4)];
+                     pszEncode[n + 2] = '=';
+                   pszEncode[n + 3] = '=';
+                    pszEncode[n + 4] = '\0';
+                     break;
+            
+             case 2:
+                     pszEncode[n] = enkey[pszSource[i] >> 2];
+                     pszEncode[n + 1] = enkey[((pszSource[i] & 3) << 4) | ((pszSource[i + 1] & 0xf0) >> 4)];
+                   pszEncode[n + 2] = enkey[((pszSource[i + 1] & 0xf) << 2) | ((0 & 0xc0) >> 6)];
+                     pszEncode[n + 3] = '=';
+                     pszEncode[n + 4] = '\0';
+                     break;
+                 }
+    
+       cout<<pszEncode;
+   
+    return 0;
+}
+    string output;
+    /*string input;
+    char temp;
+    int num = 0, line = 0;
+    while (cin.get(temp)) {
+        input = input + temp;
+    }
+    int flag = 0;
+    for (int i = 0; i < input.size(); i++)
+    {
+        switch (input.at(i))
+        {
+        case ' ':
+            if (flag == 1) num++;
+            flag = 0;
+            break;
+        case '\n':
+            if (flag == 1) num++;
+            flag = 0;
+            line++;
+            break;
+        default:
+            flag = 1;
+            break;
+        }
+    }
+    if (input.size() == 0) num = 0, line = 0;
+    cout << input.size() << ' ' << num << ' ' << line;*/
+    
+/*int n;
+    cin >> n;
+    cin >> ws;
+    string* dict=new string[5000];
+    char* tmp = new char[100];
     int f = 0, m = 0;
     for (int i = 0; i < n; i++)
     {
-        int num = atoi(dict[i]);
-        char gender =dict[i][3];
+        cin.getline(tmp, 100);
+        int num = atoi(tmp);
+        char* gender1 = strstr(tmp," ");
+        char gender = *(gender1 + 1);
         if (gender == 'f') {
             f += num;
         }
-        else {
+        else if (gender == 'm') {
             m += num;
         }
     }
+    cout << "f: " << f << endl;
+    cout << "m: " << m << endl;*/
     /*int num = 0;
     int line = 0;
     int words = 0;
@@ -37,8 +116,6 @@ int main() {
         cout << *dict[i];
         i++;
     }*/
-    return 0;
-}
     /*int n = 0, count = 0;
     int tmp;
     int arr[10000];
