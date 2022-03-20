@@ -6,56 +6,154 @@
 
 using namespace std;
 
+
 int main() {
-    string pszSource;
-    char temp;
-    while (cin.get(temp)) {
-        pszSource = pszSource + temp;
-    }
-    string output;
-    int nByteSrc = pszSource.size();
-    const char* enkey = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    std::string pszEncode(nByteSrc * 4 / 3 + 4, '\0');
-    int nLoop = nByteSrc % 3 == 0 ? nByteSrc : nByteSrc - 3;
-    int n = 0;
-    int i = 0;
-    for ( i = 0; i < nLoop; i += 3)
+    char res[20][60] = { 0 };
+    int n;
+    char str[60];
+    cin >> str >> n;
+    int row = 0,column=0;
+    for (int i = 0; i < strlen(str); i++)
     {
-           pszEncode[n] = enkey[pszSource[i] >> 2];
-               pszEncode[n + 1] = enkey[((pszSource[i] & 3) << 4) | ((pszSource[i + 1] & 0xF0) >> 4)];
-                pszEncode[n + 2] = enkey[((pszSource[i + 1] & 0x0f) << 2) | ((pszSource[i + 2] & 0xc0) >> 6)];
-                 pszEncode[n + 3] = enkey[pszSource[i + 2] & 0x3F];
-              n += 4;
+        if (i % 4 == 0) {
+            if(row)
+        }
+        res[row][column] = str[i];
+        res[row][column+1] = ' ';
+        if (row <= n - 2) row++;
+        else row = 0;
     }
-   
-    switch (nByteSrc % 3)
-    {
-            case 0:
-                     pszEncode[n] = '\0';
-                     break;
-            
-             case 1:
-                     pszEncode[n] = enkey[pszSource[i] >> 2];
-                     pszEncode[n + 1] = enkey[((pszSource[i] & 3) << 4) | ((0 & 0xf0) >> 4)];
-                     pszEncode[n + 2] = '=';
-                   pszEncode[n + 3] = '=';
-                    pszEncode[n + 4] = '\0';
-                     break;
-            
-             case 2:
-                     pszEncode[n] = enkey[pszSource[i] >> 2];
-                     pszEncode[n + 1] = enkey[((pszSource[i] & 3) << 4) | ((pszSource[i + 1] & 0xf0) >> 4)];
-                   pszEncode[n + 2] = enkey[((pszSource[i + 1] & 0xf) << 2) | ((0 & 0xc0) >> 6)];
-                     pszEncode[n + 3] = '=';
-                     pszEncode[n + 4] = '\0';
-                     break;
-                 }
-    
-       cout<<pszEncode;
-   
     return 0;
 }
-    string output;
+
+//int main() {
+//    int n = 0,m=0;
+//    cin >> n>>m;
+//    int arr[50][50] = { 0 };
+//    for (int i = 0; i < n; i++)
+//    {
+//        for (int j = 0; j < n; j++) {
+//            cin >> arr[i][j];
+//        }
+//    }
+//    for (int i = 0; i < m; i+=90)
+//    {
+//        for (int i = 0; i < n; i++) {
+//
+//        }
+//    }
+//    
+//    return 0;
+//}
+//int main() {
+//    int n = 0, m = 0;
+//    cin >> n >> m;
+//    int arr[50][50] = { 0 };
+//    for (int i = 0; i < n; i++)
+//    {
+//        for (int j = 0; j < m; j++) {
+//            cin >> arr[i][j];
+//        }
+//    }
+//
+//    int left = 0, right = m - 1, top = 0, bottom = n - 1;
+//    while (true)
+//    {
+//        if (left > right) break;
+//        for (int i = left; i <= right; i++)
+//        {
+//          
+//            cout << arr[top][i] << ' ';
+//        }
+//        top++;
+//
+//
+//        if (top > bottom) break;
+//        for (int i = top; i <= bottom ; i++)
+//        {
+//            cout << arr[i][right] << ' ';
+//        }
+//        right--;
+//
+//
+//        if (left > right) break;
+//        for (int i = right; i >= left; i--)
+//        {
+//            cout << arr[bottom][i] << ' ';
+//        }
+//        bottom--;
+//
+//
+//        if (top > bottom) break;
+//        for (int i = bottom; i >= top; i--)
+//        {
+//            cout << arr[i][left] << ' ';
+//        }
+//        left++;
+//    }
+//
+//
+//
+//    for (int i = 0; i < n; i++)
+//    {
+//        for (int j = 0; j < m; j++) {
+//            if(j!=m-1)
+//            cout << arr[i][j]<<' ';
+//            else cout << arr[i][j] << '\n';
+//        }
+//    }
+//    return 0;
+//}
+//int main() {
+//    string pszSource;
+//    char temp;
+//    while (cin.get(temp)) {
+//        pszSource = pszSource + temp;
+//    }
+//    string output;
+//    int nByteSrc = pszSource.size();
+//    const char* enkey = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+//    std::string pszEncode(nByteSrc * 4 / 3 + 4, '\0');
+//    int nLoop = nByteSrc % 3 == 0 ? nByteSrc : nByteSrc - 3;
+//    int n = 0;
+//    int i = 0;
+//    for ( i = 0; i < nLoop; i += 3)
+//    {
+//           pszEncode[n] = enkey[pszSource[i] >> 2];
+//               pszEncode[n + 1] = enkey[((pszSource[i] & 3) << 4) | ((pszSource[i + 1] & 0xF0) >> 4)];
+//                pszEncode[n + 2] = enkey[((pszSource[i + 1] & 0x0f) << 2) | ((pszSource[i + 2] & 0xc0) >> 6)];
+//                 pszEncode[n + 3] = enkey[pszSource[i + 2] & 0x3F];
+//              n += 4;
+//    }
+//   
+//    switch (nByteSrc % 3)
+//    {
+//            case 0:
+//                     pszEncode[n] = '\0';
+//                     break;
+//            
+//             case 1:
+//                     pszEncode[n] = enkey[pszSource[i] >> 2];
+//                     pszEncode[n + 1] = enkey[((pszSource[i] & 3) << 4) | ((0 & 0xf0) >> 4)];
+//                     pszEncode[n + 2] = '=';
+//                   pszEncode[n + 3] = '=';
+//                    pszEncode[n + 4] = '\0';
+//                     break;
+//            
+//             case 2:
+//                     pszEncode[n] = enkey[pszSource[i] >> 2];
+//                     pszEncode[n + 1] = enkey[((pszSource[i] & 3) << 4) | ((pszSource[i + 1] & 0xf0) >> 4)];
+//                   pszEncode[n + 2] = enkey[((pszSource[i + 1] & 0xf) << 2) | ((0 & 0xc0) >> 6)];
+//                     pszEncode[n + 3] = '=';
+//                     pszEncode[n + 4] = '\0';
+//                     break;
+//                 }
+//    
+//       cout<<pszEncode;
+//   
+//    return 0;
+//}
+    //string output;
     /*string input;
     char temp;
     int num = 0, line = 0;

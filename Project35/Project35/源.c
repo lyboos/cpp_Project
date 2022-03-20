@@ -96,6 +96,27 @@ int spitString(const char* src,char sub_c,char buf[10][30],int* count) {
 	if (n == 0) return -2;
 	return 0;
 }
+
+
+typedef struct t2 {
+	char name[50];
+	int age;
+}t1;
+
+
+void copyt1(t1* dst, t1* src) {
+	*dst = *src;
+}
+
+//int main() {
+//	t1 ly = {"lyboos",89};
+//	//t1 lyy = ly;
+//	
+//	t1 lyy;
+//	copyt1(&lyy,&ly);
+//	printf("%s,%d\n", lyy.name, lyy.age);
+//	return 0;
+//}
 //int main() {
 //	const char* src = "abcd,asd,dasaws,adedsw";
 //	char buf[10][30] = { 0 };
