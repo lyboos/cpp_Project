@@ -8,11 +8,12 @@
 using namespace std;
 
 int main() {
-    char bfcode[1023] = { 0 }, paper[1023] = {0};
+    char bfcode[10000] = { 0 }, paper[1000] = { 0 };
     int pointer = 0;
-    int stack[233], stp = 0;
-    cin.getline(bfcode,1023);
-    for (int i = 0; bfcode[i]!='\0'; i++)
+    int stack[1000], stp = 0;
+    
+    cin.getline(bfcode, 10000);
+    for (int i = 0; bfcode[i] != '\0'; i++)
     {
         switch (bfcode[i]) {
         case '+':
@@ -34,15 +35,23 @@ int main() {
             printf("%c", paper[pointer]);
             break;
         case '[':
-            if (paper[pointer] != 0) {
-                stack[stp] = i; stp++;
+            if (paper[pointer] == 0) {
+                int number = 0;
+                while (!(bfcode[i] == ']' && number == 1)) {
+                    if (bfcode[i] == '[') number++;
+                    else if (bfcode[i] == ']') number--;
+                    i++;
+                }
             }
             break;
         case ']':
-            if (paper[pointer] != '\0') i = stack[stp - 1];
-            else {
-                stack[stp - 1] = 0;
-                stp--;
+            if (paper[pointer] != 0) {
+                int number = 0;
+                while (!(bfcode[i] == '[' && number == 1)) {
+                    if (bfcode[i] == ']') number++;
+                    else if (bfcode[i] == '[') number--;
+                    i--;
+                }
             }
             break;
         default:break;
