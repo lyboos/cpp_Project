@@ -156,3 +156,12 @@ void copyt1(t1* dst, t1* src) {
 //	//}*/
 //	return 0;
 //}
+
+//typedef struct A{
+//	int a;
+//}A;
+//
+//int main() {
+//	A a;
+//	return 0;
+//}

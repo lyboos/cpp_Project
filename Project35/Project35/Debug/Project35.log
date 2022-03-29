@@ -1,2 +1,7 @@
 ﻿  源.cpp
+E:\code\c code\Project35\Project35\源.cpp(79,18): warning C4018: “>”: 有符号/无符号不匹配
+E:\code\c code\Project35\Project35\源.cpp(108,27): warning C4018: “<”: 有符号/无符号不匹配
+E:\code\c code\Project35\Project35\源.cpp(108,40): warning C4018: “<”: 有符号/无符号不匹配
+E:\code\c code\Project35\Project35\源.cpp(122,18): warning C4018: “>”: 有符号/无符号不匹配
+E:\code\c code\Project35\Project35\源.cpp(165,23): warning C4018: “<”: 有符号/无符号不匹配
   Project35.vcxproj -> E:\code\c code\Project35\Debug\Project35.exe

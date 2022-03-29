@@ -1,64 +1,533 @@
 #define  _CRT_SECURE_NO_WARNINGS 
 #pragma once
 #include<iostream>
-#include<limits>
-#include <sstream>
-#include<stdlib.h>
-#include<stdio.h>
+#include<cstddef>
+#include <string>
+#include <vector>
+#include<cctype>
 using namespace std;
+void print(vector<string> arr) {
+    int length = arr.size();
+    for (int i = 0; i < length; i++)
+    {
+        cout << arr[i] << endl;
+    }
+}
+void asDefault(vector<string> arr) {
+    int length = arr.size();
+    string temp;
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j +1< length-i; j++)
+        {
+            if (arr[j] > arr[j + 1]) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    print(arr);
+}
+
+bool cmp_num(string a, string b) {
+    int anum = atoi(a.c_str());
+    int bnum = atoi(b.c_str());
+    if (anum > bnum)
+        return true;
+    return false;
+}
+void asNumval(vector<string> arr) {
+    int length = arr.size();
+    string temp;
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j + 1 < length - i; j++)
+        {
+            if (cmp_num(arr[j] , arr[j + 1])) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    print(arr);
+}
+bool cmp_alpha(string a, string b) {
+    int length = a.size() > b.size() ? b.size() : a.size();
+    for (int i = 0,j=0; i < a.size()&&j<b.size();)
+    {
+        char an = a.at(i), bn = b.at(j);
+        if (isalpha(an) && isalpha(bn)) {
+            if ((((an - bn) == 32)|| (an - bn) == -32)) {
+                if (an - bn > 0) return true;
+                else if (an - bn < 0) return false;
+                i++, j++;
+                continue;
+            }
+            if ((an <= 90 && bn <= 90) || (an >= 97 && bn >= 97))
+            {
+                if (an - bn > 0) return true;
+                else if (an - bn < 0) return false;
+            }
+            else if (an >= 97 && bn <= 90) {
+                an -= 32;
+                if (an - bn > 0) return true;
+                else if (an - bn < 0) return false;
+            }
+            else if (bn >= 97 && an <= 90) {
+                bn -= 32;
+                if (an - bn > 0) return true;
+                else if (an - bn < 0) return false;
+            }
+            i++, j++;
+        }
+        else {
+            if (an - bn > 0) return true;
+            else if(an - bn < 0) return false;
+            i++, j++;
+        }
+    }
+}
+void asAlpha(vector<string> arr) {
+    int length = arr.size();
+    string temp;
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j + 1 < length - i; j++)
+        {
+            if (cmp_alpha(arr[j], arr[j + 1])) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    print(arr);
+}
+
+bool isSuit(char an) {
+    if (isalnum(an)) return true;
+    if (isspace(an)) return true;
+    if (isalpha(an)) return true;
+    return false;
+}
+bool cmp_alphaAndNum(string a, string b) {
+    int length = a.size() > b.size() ? b.size() : a.size();
+    for (int i = 0,j=0; i < a.size()&&j<b.size();)
+    {
+        char an = a.at(i), bn = b.at(j);
+        if (isSuit(an) && isSuit(bn)) {
+            if (an - bn > 0) return true;
+            else if (an - bn < 0) return false;
+            i++; j++;
+        }
+        else if (isSuit(an)) {
+            j++;
+        }
+        else if (isSuit(bn)) {
+            i++;
+        }
+        else {
+            i++, j++;
+        }
+    }
+    if (a.size() > length)
+        return true;
+    else return false;
+}
+void onlyNumandAlpha(vector<string> arr) {
+    int length = arr.size();
+    string temp;
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j + 1 < length - i; j++)
+        {
+            if (cmp_alphaAndNum(arr[j], arr[j + 1])) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    print(arr);
+}
+void asReverse(vector<string> arr) {
+    int length = arr.size();
+    string temp;
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j + 1 < length - i; j++)
+        {
+            if (arr[j] < arr[j + 1]) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    print(arr);
+}
 
 int main() {
-    char bfcode[10000] = { 0 }, paper[1000] = { 0 };
-    int pointer = 0;
-    int stack[1000], stp = 0;
-    
-    cin.getline(bfcode, 10000);
-    for (int i = 0; bfcode[i] != '\0'; i++)
+    vector<string> arr;
+    size_t n;
+    cin >> n; cin.get();
+    //std::cin >> std::ws;
+    string s;
+    for (int i = 0; i < n; i++)
     {
-        switch (bfcode[i]) {
-        case '+':
-            paper[pointer]++;
-            break;
+        getline(cin,s);
+        arr.push_back(s);
+    }
+    int c;
+    cin >> c; cin.get();
+    //std::cin >> std::ws;
+    string order[100];
+    for (int i = 0; i < c; i++)
+    {
+        getline(cin, order[i]);
+    }
+    for (int i = 0; i < c; i++)
+    {
+        switch (order[i][0]) {
         case '-':
-            paper[pointer]--;
+            asDefault(arr);
             break;
-        case '>':
-            pointer++;
+        case 'n':
+            asNumval(arr);
             break;
-        case '<':
-            pointer ? pointer-- : pointer;
+        case 'i':
+            asAlpha(arr);
             break;
-        case ',':
-            scanf("%c", &paper[pointer]);
+        case 'd':
+            onlyNumandAlpha(arr);
             break;
-        case '.':
-            printf("%c", paper[pointer]);
-            break;
-        case '[':
-            if (paper[pointer] == 0) {
-                int number = 0;
-                while (!(bfcode[i] == ']' && number == 1)) {
-                    if (bfcode[i] == '[') number++;
-                    else if (bfcode[i] == ']') number--;
-                    i++;
-                }
-            }
-            break;
-        case ']':
-            if (paper[pointer] != 0) {
-                int number = 0;
-                while (!(bfcode[i] == '[' && number == 1)) {
-                    if (bfcode[i] == ']') number++;
-                    else if (bfcode[i] == '[') number--;
-                    i--;
-                }
-            }
+        case 'r':
+            asReverse(arr);
             break;
         default:break;
         }
     }
     return 0;
 }
+
+
+//int whichorder(char order[100]) {
+//    if (order[0] == 'p') {
+//        if (order[1] == 'u') {
+//            if (order[4] == 'F') {
+//                return 1;
+//            }
+//            else if (order[4] == 'B') {
+//                return 2;
+//            }
+//        }
+//        if (order[1] == 'o') {
+//            if (order[3] == 'F') {
+//                return 3;
+//            }
+//            else if (order[3] == 'B') {
+//                return 4;
+//            }
+//        }
+//    }
+//    else if (order[0] == 'g') {
+//        if (order[1] == 'e')
+//            if (order[3] == 'S')
+//                return 5;
+//    }
+//    return -1;
+//}
+//
+//struct Node {
+//    Node* next;//后一个节点
+//    Node* prev;//前一个节点
+//    int val;//该节点存放的数字
+//};
+////双端队列
+//struct Deque {
+//    int size;//有效节点数
+//    Node* front;//虚拟头节点，不作为有效节点
+//    Node* rear;//虚拟尾节点，不作为有效节点
+//};
+//void push_front(Deque* self, int value) {
+//    Node* head = self->front->next;
+//    Node* back = self->rear->prev;
+//    if (self->front->next==self->rear) {
+//        Node* node1 = (Node*)malloc(sizeof(Node));
+//        *node1 = { self->rear,self->front,value };
+//        self->front->next = node1;
+//        self->rear->prev=node1;
+//    }
+//    else {
+//        Node* node1 = (Node*)malloc(sizeof(Node));
+//        *node1 = { head,self->front,value };
+//        self->front->next = node1;
+//        head->prev = node1;
+//    }
+//    self->size++;
+//}
+//void push_back(Deque* self, int value) {
+//    Node* head = self->front->next;
+//    Node* back = self->rear->prev;
+//    if (self->front->next == self->rear) {
+//        Node* node1 = (Node*)malloc(sizeof(Node));
+//        *node1 = { self->rear,self->front,value };
+//        self->front->next = node1;
+//        self->rear->prev = node1;
+//    }
+//    else {
+//        Node* node1 = (Node*)malloc(sizeof(Node));
+//        *node1 = { self->rear,back,value };
+//        self->rear->prev = node1;
+//        back->next = node1;
+//    }
+//    self->size++;
+//}
+//void pop_front(Deque* self) {
+//    Node* head = self->front->next;
+//    Node* back = self->rear->prev;
+//    if (self->front->next == self->rear) {
+//        cout << -1 << endl;
+//    }
+//    else {
+//        cout << head->val << endl;
+//        (self->front)->next = head->next;
+//        (head->next)->prev = self->front;
+//        self->size--;
+//    }
+//}
+//void pop_back(Deque* self) {
+//    Node* head = self->front->next;
+//    Node* back = self->rear->prev;
+//    if (self->front->next == self->rear) {
+//        cout << -1 << endl;
+//    }
+//    else {
+//        cout << back->val << endl;
+//        self->rear->prev = back->prev;
+//        back->prev->next = self->rear;
+//        self->size--;
+//    }
+//}
+//void getsize(Deque* self) {
+//    cout << self->size << endl;
+//}
+//void substing(char* pSrc, char* pDes, int StartPos, int len)
+//{
+//    if (StartPos > strlen(pSrc))
+//        return;
+//    len = (strlen(pSrc) - StartPos) > len ? len : (strlen(pSrc) - StartPos);
+//    strncpy(pDes, pSrc + StartPos, len);
+//    pDes[len] = '\0';
+//}
+//int main() {
+//    int n;
+//    Node front = { nullptr,nullptr,-1};
+//    Node rear = { nullptr,nullptr,-2};
+//    rear.prev = &front;
+//    front.next = &rear;
+//    Deque deque1 = {0,&front,&rear};
+//    Deque* deque = &deque1;
+//    cin >> n; cin.get();
+//    string s[100];
+//    for (int i = 0; i < n; i++)
+//    {
+//        getline(cin, s[i]);
+//    }
+//    int val; char* pointer;
+//    for(int i=0;i<n;i++)
+//    {
+//        char* order = (char *)s[i].c_str();
+//        switch (whichorder(order))
+//        {
+//        case 1:
+//            val = atoi(s[i].substr(9).c_str());
+//            push_front(deque, val);
+//            break;
+//        case 2:
+//            val = atoi(s[i].substr(8).c_str());
+//            push_back(deque, val);
+//            break;
+//        case 3:
+//            pop_front(deque);
+//            break;
+//        case 4:
+//            pop_back(deque);
+//            break;
+//        case 5:
+//            getsize(deque);
+//            break;
+//        default:
+//            break;
+//        }
+//    }
+//    return 0;
+//}
+//int main() {
+//    int src[101][101] = { 0 };
+//    int n; 
+//    char ch;
+//    cin >> n; 
+//    std::size_t n_rows1, n_cols1;
+//    std::cin >> n_rows1 >> n_cols1;
+//    for (int i = 0; i < n_rows1; i++) {
+//        std::copy_n(std::istream_iterator<int>(std::cin), n_cols1, src[i]);
+//    }
+//    //cin.get(ch); cin.get(ch);
+//    //for (int i = 0; i < n_rows1; i++) {
+//    //    int index = 0;
+//    //    while (cin.get(ch) && ch != '\r') {
+//    //        src[i][index] = (int)(ch-'1'); // 空白符也一起读进来
+//    //        index++;
+//    //    }
+//    //    cin.get();
+//    //}
+//    for (int y = 1; y < n; y++)
+//    {
+//        int mat[101][101] = { 0 };
+//        int res[101][101] = { 0 };
+//        std::size_t n_rows, n_cols;
+//        std::cin >> n_rows >> n_cols; cin.get(ch); cin.get(ch);
+//        //for (int i = 0; i < n_rows1; i++) {
+//        //    int index = 0;
+//        //    while (cin.get(ch) && ch != '\r') {
+//        //        src[i][index] = (int)(ch - '1'); // 空白符也一起读进来
+//        //        index++;
+//        //    }
+//        //    cin.get(ch);
+//        //}
+//        for (int f = 0; f < n_rows; f++) {
+//            std::copy_n(std::istream_iterator<int>(std::cin), n_cols, mat[f]);
+//        }
+//
+//        for (int i = 0; i < n_rows1; i++)
+//        {
+//            for (int j = 0; j < n_rows; j++)
+//            {
+//                for (int k = 0; k < n_cols; k++)
+//                {
+//                    res[i][k] += (src[i][j]*mat[j][k]);
+//                }
+//            }
+//        }
+//        for (int  f= 0;  f< 10; f++) {
+//            for (int j = 0; j < 10; j++)
+//            {
+//                src[f][j] = res[f][j];
+//            }
+//        }
+//        n_rows1 = n_rows1; n_cols1=n_cols;
+//    }
+//    for (int f = 0; f < n_rows1; f++)
+//    {
+//        for (int j = 0; j < n_cols1; j++)
+//            cout << src[f][j] << " ";
+//        cout << endl;
+//    }
+//    return 0;
+//}
+
+
+
+
+//typedef struct A {
+//    int a;
+//    A* next;
+//}A;
+//vector<int> dfs(A* head) {
+//    A* pre = nullptr;
+//    A* cur = head;
+//    A* temp = cur;
+//    while (cur) {
+//        temp = cur->next; //需要现保存一下，不然断开了就找不到了
+//        cur->next = pre;
+//        pre = cur; // pre 和 cur分别向右边平移
+//        cur = temp;
+//    }
+//    vector<int> ret;
+//    while (pre) {
+//        ret.push_back(pre->a);
+//        pre = pre->next;
+//    }
+//    return ret;
+//}
+//
+//void add(A** head, int a) {
+//    A* tem = (A*)malloc(sizeof(A));
+//    tem->a = a; tem->next = nullptr;
+//    (*head)->next = tem;
+//    (*head)= (*head)->next;
+//}
+//int main() {
+//    A* head=(A*)malloc(sizeof(A));
+//    A* temp = head;
+//    int ch; int count = 0;
+//    while (scanf("%d",&ch))
+//    {
+//         count++;
+//         add(&temp, ch);
+//    }
+//    vector<int> ret=dfs(head->next);
+//    for (int i = 0; i <count; i++)
+//    {
+//        cout << ret[i] << ' ';
+//    }
+//    return 0;
+//}
+//int main() {
+//    char bfcode[10000] = { 0 }, paper[1000] = { 0 };
+//    int pointer = 0;
+//    int stack[1000], stp = 0;
+//    
+//    cin.getline(bfcode, 10000);
+//    for (int i = 0; bfcode[i] != '\0'; i++)
+//    {
+//        switch (bfcode[i]) {
+//        case '+':
+//            paper[pointer]++;
+//            break;
+//        case '-':
+//            paper[pointer]--;
+//            break;
+//        case '>':
+//            pointer++;
+//            break;
+//        case '<':
+//            pointer ? pointer-- : pointer;
+//            break;
+//        case ',':
+//            scanf("%c", &paper[pointer]);
+//            break;
+//        case '.':
+//            printf("%c", paper[pointer]);
+//            break;
+//        case '[':
+//            if (paper[pointer] == 0) {
+//                int number = 0;
+//                while (!(bfcode[i] == ']' && number == 1)) {
+//                    if (bfcode[i] == '[') number++;
+//                    else if (bfcode[i] == ']') number--;
+//                    i++;
+//                }
+//            }
+//            break;
+//        case ']':
+//            if (paper[pointer] != 0) {
+//                int number = 0;
+//                while (!(bfcode[i] == '[' && number == 1)) {
+//                    if (bfcode[i] == ']') number++;
+//                    else if (bfcode[i] == '[') number--;
+//                    i--;
+//                }
+//            }
+//            break;
+//        default:break;
+//        }
+//    }
+//    return 0;
+//}
 
 //int main() {
 //    char res[20][120] = { 0 };
@@ -461,15 +930,15 @@ int main() {
 }*/
 
 
-int rev(long m)
-{
-    if (m > numeric_limits<int>::max())
-        return -1;
-    long t = 0;
-    while (m > 0)
-    {
-        t = t * 10 + m % 10;
-        m = m / 10;
-    }
-    return t;
-}
+//int rev(long m)
+//{
+//    if (m > numeric_limits<int>::max())
+//        return -1;
+//    long t = 0;
+//    while (m > 0)
+//    {
+//        t = t * 10 + m % 10;
+//        m = m / 10;
+//    }
+//    return t;
+//}
