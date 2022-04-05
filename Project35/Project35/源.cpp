@@ -5,212 +5,663 @@
 #include <string>
 #include <vector>
 #include<cctype>
+#include <algorithm>
+#include <cstring>
+#include <sstream>
+#include <iterator>
+#include <cmath>
 using namespace std;
-void print(vector<string> arr) {
-    int length = arr.size();
-    for (int i = 0; i < length; i++)
-    {
-        cout << arr[i] << endl;
-    }
+long long hash1(int key) {
+   long long res = llabs(3 * pow(key, 3) + 5 * pow(key, 2) + 7 * key + 11);
+   return res;
 }
-void asDefault(vector<string> arr) {
-    int length = arr.size();
-    string temp;
-    for (int i = 0; i < length; i++)
-    {
-        for (int j = 0; j +1< length-i; j++)
-        {
-            if (arr[j] > arr[j + 1]) {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-        }
-    }
-    print(arr);
-}
+struct Node {
+	int key;
+	string val;
+	Node* next;
+//    int key=-99;
+//    string value;
+//    node* next;
+//    int num;
+};
 
-bool cmp_num(string a, string b) {
-    int anum = atoi(a.c_str());
-    int bnum = atoi(b.c_str());
-    if (anum > bnum)
-        return true;
-    return false;
-}
-void asNumval(vector<string> arr) {
-    int length = arr.size();
-    string temp;
-    for (int i = 0; i < length; i++)
-    {
-        for (int j = 0; j + 1 < length - i; j++)
-        {
-            if (cmp_num(arr[j] , arr[j + 1])) {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-        }
-    }
-    print(arr);
-}
-bool cmp_alpha(string a, string b) {
-    int length = a.size() > b.size() ? b.size() : a.size();
-    for (int i = 0,j=0; i < a.size()&&j<b.size();)
-    {
-        char an = a.at(i), bn = b.at(j);
-        if (isalpha(an) && isalpha(bn)) {
-            if ((((an - bn) == 32)|| (an - bn) == -32)) {
-                if (an - bn > 0) return true;
-                else if (an - bn < 0) return false;
-                i++, j++;
-                continue;
-            }
-            if ((an <= 90 && bn <= 90) || (an >= 97 && bn >= 97))
-            {
-                if (an - bn > 0) return true;
-                else if (an - bn < 0) return false;
-            }
-            else if (an >= 97 && bn <= 90) {
-                an -= 32;
-                if (an - bn > 0) return true;
-                else if (an - bn < 0) return false;
-            }
-            else if (bn >= 97 && an <= 90) {
-                bn -= 32;
-                if (an - bn > 0) return true;
-                else if (an - bn < 0) return false;
-            }
-            i++, j++;
-        }
-        else {
-            if (an - bn > 0) return true;
-            else if(an - bn < 0) return false;
-            i++, j++;
-        }
-    }
-}
-void asAlpha(vector<string> arr) {
-    int length = arr.size();
-    string temp;
-    for (int i = 0; i < length; i++)
-    {
-        for (int j = 0; j + 1 < length - i; j++)
-        {
-            if (cmp_alpha(arr[j], arr[j + 1])) {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-        }
-    }
-    print(arr);
-}
-
-bool isSuit(char an) {
-    if (isalnum(an)) return true;
-    if (isspace(an)) return true;
-    if (isalpha(an)) return true;
-    return false;
-}
-bool cmp_alphaAndNum(string a, string b) {
-    int length = a.size() > b.size() ? b.size() : a.size();
-    for (int i = 0,j=0; i < a.size()&&j<b.size();)
-    {
-        char an = a.at(i), bn = b.at(j);
-        if (isSuit(an) && isSuit(bn)) {
-            if (an - bn > 0) return true;
-            else if (an - bn < 0) return false;
-            i++; j++;
-        }
-        else if (isSuit(an)) {
-            j++;
-        }
-        else if (isSuit(bn)) {
-            i++;
-        }
-        else {
-            i++, j++;
-        }
-    }
-    if (a.size() > length)
-        return true;
-    else return false;
-}
-void onlyNumandAlpha(vector<string> arr) {
-    int length = arr.size();
-    string temp;
-    for (int i = 0; i < length; i++)
-    {
-        for (int j = 0; j + 1 < length - i; j++)
-        {
-            if (cmp_alphaAndNum(arr[j], arr[j + 1])) {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-        }
-    }
-    print(arr);
-}
-void asReverse(vector<string> arr) {
-    int length = arr.size();
-    string temp;
-    for (int i = 0; i < length; i++)
-    {
-        for (int j = 0; j + 1 < length - i; j++)
-        {
-            if (arr[j] < arr[j + 1]) {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-        }
-    }
-    print(arr);
-}
-
+int curNum = 0;
+void reHash(vector<Node*>& nodes) {
+		int newLen = nodes.size() * 2 + 1;
+		vector<Node*> res(newLen, nullptr);
+		vector<Node*> store;
+		for (Node* n : nodes) {
+			if (n != nullptr) {
+				Node* copy1 = n;
+				while (copy1 != nullptr) {
+					Node* tmpNode = new Node();
+					tmpNode->val = copy1->val;
+					tmpNode->key = copy1->key;
+					store.push_back(tmpNode);
+					copy1 = copy1->next;
+				}
+			}
+		}
+		for (Node* node : store) {
+			long long hash = hash1(node->key);
+			int pos = hash % newLen;
+			if (res[pos] == nullptr)
+				res[pos] = node;
+			else {
+				Node* tmp = res[pos];
+				if (tmp->key > node->key) {
+					res[pos] = node;
+					node->next = tmp;
+				}
+				else {
+					while (tmp->next != nullptr) {
+						if (tmp->next->key > node->key) {
+							node->next = tmp->next;
+							tmp->next = node;
+							break;
+						}
+						tmp = tmp->next;
+					}
+					if (tmp->next == nullptr)
+						tmp->next = node;
+				}
+			}
+		}
+		nodes = res;
+		for (int i = 0; i < newLen; i++) {
+			if (nodes[i] != nullptr) {
+				Node* tNode = nodes[i];
+				int curLen = 0;
+				while (tNode != nullptr) {
+					curLen++;
+					tNode = tNode->next;
+				}
+				if (curLen > 4) {
+					reHash(nodes);
+					return;
+				}
+			}
+		}
+		return;
+	}
+	void addKey(vector<Node*>& nodes, Node* node) {
+		long long hash = hash1(node->key);
+		int length = nodes.size();
+		int pos = hash % length;
+		if (nodes[pos] == nullptr) {
+			nodes[pos] = node;
+			if (curNum > nodes.size()) {
+				reHash(nodes);
+				return;
+			}
+		}
+		else {
+			Node* tmp = nodes[pos];
+			if (tmp->key > node->key) {
+				nodes[pos] = node;
+				node->next = tmp;
+			}
+			else {
+				while (tmp->next != nullptr) {
+					if (tmp->next->key > node->key) {
+						node->next = tmp->next;
+						tmp->next = node;
+						break;
+					}
+					tmp = tmp->next;
+				}
+				if (tmp->next == nullptr)
+					tmp->next = node;
+			}
+			if (curNum > nodes.size()) {
+				reHash(nodes);
+				return;
+			}
+			//¾Ö²¿Á¿À©ÈÝ
+			int curLen = 0;
+			tmp = nodes[pos];
+			while (tmp != nullptr) {
+				curLen++;
+				tmp = tmp->next;
+			}
+			if (curLen > 4)
+				reHash(nodes);
+		}
+		return;
+	}
+	void hashTable(vector<Node*>& nodes, int n) {
+		//    hashmap map;
+		//    int l; cin >> l; cin.get();
+		//    int size = 0;
+		//    int n; cin >> n; cin.get();
+		//    string order[100];
+		//    for (int i = 0; i < n; i++)
+		//    {
+		//        getline(cin, order[i]);
+		//    }
+		//    int key, pos; string value; node* node1, * node2;
+		//    node empty = { -99,"lyboos",nullptr,-99 };
+		//    for (int i = 0; i < 1000; i++)
+		//    {
+		//        map.entry[i] = empty;
+		//    }
+		for (int i = 1; i <= n; i++) {
+			string order;
+			cin >> order;
+			if (order.at(0) == 'a') {
+				curNum++;
+				Node* node = new Node();
+				cin >> node->key >> node->val;
+				addKey(nodes, node);
+			}
+			else if (order.at(0) == 's') {
+				//            case 2:
+					//                key = key1(order[i]);
+					//                pos = hash1(key);
+					//                node1 = (node*)malloc(sizeof(node));
+					//                map.entry[pos] = *node1;
+					//                break;
+				int pos;
+				cin >> pos;
+				if (nodes[pos] == nullptr) {
+					cout << "null" << endl;
+				}
+				else {
+					Node* node = nodes[pos];
+					while (node->next != nullptr) {
+						cout << node->key << ":" << node->val << "->";
+						node = node->next;
+					}
+					cout << node->key << ":" << node->val << endl;
+				}
+			}
+			else if (order.at(0) == 'd') {
+				//            case 3:
+				//                pos = key1(order[i]);
+				//                node1 = &map.entry[pos];
+				//                if (map.entry[pos].key == -99) {
+				//                    cout << "null" << endl;
+				//                }					              else {
+					//                    do
+					//                    {
+					//                        cout << node1->key << ":" << node1->value;
+					//                        if (node1->next != nullptr)
+					//                        {
+					//                            cout << "->";
+					//                            node1 = node1->next;
+					//                        }
+					//                    } while (node1->next!=nullptr);
+					//                }
+					//                break;
+					//            default:break;
+					//        }
+					//    }
+				int key;
+				cin >> key;
+				curNum--;
+				long long hash = hash1(key);
+				int len = nodes.size();
+				int pos = hash % len;
+				Node* node = nodes[pos];
+				if (node->key == key) {
+					nodes[pos] = node->next;
+				}
+				else {
+					while (node->next != nullptr) {
+						if (node->next->key == key) {
+							node->next = node->next->next;
+							break;
+						}
+						node = node->next;
+					}
+				}
+			}
+		}
+	}
 int main() {
-    vector<string> arr;
-    size_t n;
-    cin >> n; cin.get();
-    //std::cin >> std::ws;
-    string s;
-    for (int i = 0; i < n; i++)
-    {
-        getline(cin,s);
-        arr.push_back(s);
-    }
-    int c;
-    cin >> c; cin.get();
-    //std::cin >> std::ws;
-    string order[100];
-    for (int i = 0; i < c; i++)
-    {
-        getline(cin, order[i]);
-    }
-    for (int i = 0; i < c; i++)
-    {
-        switch (order[i][0]) {
-        case '-':
-            asDefault(arr);
-            break;
-        case 'n':
-            asNumval(arr);
-            break;
-        case 'i':
-            asAlpha(arr);
-            break;
-        case 'd':
-            onlyNumandAlpha(arr);
-            break;
-        case 'r':
-            asReverse(arr);
-            break;
-        default:break;
-        }
-    }
-    return 0;
+	int n;
+	cin >> n;
+	vector<Node*> nodes(n, nullptr);
+	int m;
+	cin >> m;
+	hashTable(nodes, m);
 }
+
+//
+//struct hashmap {
+//    node entry[1000];
+//    int size;
+//};
+//
+
+//
+//
+//int whichorder(string str) {
+//    if (str.at(0) == 'a') return 1;
+//    if (str.at(0) == 'd') return 2;
+//    if (str.at(0) == 's') return 3;
+//    return -1;
+//}
+//int key1(string str) {
+//    string s = " ";
+//    vector<string> result = split(str,s);
+//    return atoi(result[1].c_str());
+//}
+//
+//string value1(string str) {
+//    string s = " ";
+//    vector<string> result = split(str, s);
+//    return result[2];
+//}
+//
+
+//int main() {
+
+//    return 0;
+//}
+
+
+//#ifndef _HASHMAP_H_
+//#define _HASHMAP_H_
+//
+//template<class Key, class Value>
+//class HashNode
+//{
+//public:
+//    Key    _key;
+//    Value  _value;
+//    HashNode *next;
+//
+//    HashNode(Key key, Value value)
+//    {
+//        _key = key;
+//        _value = value;
+//        next = NULL;
+//    }
+//    ~HashNode()
+//    {
+//
+//    }
+//    HashNode& operator=(const HashNode& node)
+//    {
+//        _key  = node._key;
+//        _value = node._value;
+//        next = node.next;
+//        return *this;
+//    }
+//};
+//
+//template <class Key, class Value, class HashFunc, class EqualKey>
+//class HashMap
+//{
+//public:
+//    HashMap(int size);
+//    ~HashMap();
+//    bool insert(const Key& key, const Value& value);
+//    bool del(const Key& key);
+//    HashNode<Key, Value>& find(const Key& key);
+//    HashNode<Key, Value>& operator [](const Key& key);
+//    HashNode<Key, Value>** table;
+//    HashFunc hash;
+//    EqualKey equal;
+//    Value ValueNULL;
+//    HashNode<Key, Value>& nodeNULL;
+//
+//private:
+//    unsigned int _size;
+//};
+//
+//
+//template <class Key, class Value, class HashFunc, class EqualKey>
+//HashMap<Key, Value, HashFunc, EqualKey>::HashMap(int size) : _size(size),hash(),equal()
+//{
+//    table = new HashNode<Key, Value>*[_size];
+//    for (unsigned i = 0; i < _size; i++)
+//        table[i] = NULL;
+//}
+//
+//
+//
+//template <class Key, class Value, class HashFunc, class EqualKey>
+//HashMap<Key, Value, HashFunc, EqualKey>::~HashMap()
+//{
+//    for (unsigned i = 0; i < _size; i++)
+//    {
+//        HashNode<Key, Value> *currentNode = table[i];
+//        while (currentNode)
+//        {
+//            HashNode<Key, Value> *temp = currentNode;
+//            currentNode = currentNode->next;
+//            delete temp;
+//        }
+//    }
+//    delete table;
+//}
+//
+//
+//template <class Key, class Value, class HashFunc, class EqualKey>
+//bool HashMap<Key, Value, HashFunc, EqualKey>::insert(const Key& key, const Value& value)
+//{
+//    int index = hash(key)%_size;
+//    HashNode<Key, Value> * node = new HashNode<Key, Value>(key,value);
+//    node->next = table[index];
+//    table[index] = node;
+//    return true;
+//}
+//
+//
+//template <class Key, class Value, class HashFunc, class EqualKey>
+//bool HashMap<Key, Value, HashFunc, EqualKey>::del(const Key& key)
+//{
+//    unsigned index = hash(key) % _size;
+//    HashNode<Key, Value> * node = table[index];
+//    HashNode<Key, Value> * prev = NULL;
+//    while (node)
+//    {
+//        if (node->_key == key)
+//        {
+//            if (prev == NULL)
+//            {
+//                table[index] = node->next;
+//            }
+//            else
+//            {
+//                prev->next = node->next;
+//            }
+//            delete node;
+//            return true;
+//        }
+//        prev = node;
+//        node = node->next;
+//    }
+//    return false;
+//}
+//
+//template <class Key, class Value, class HashFunc, class EqualKey>
+//HashNode<Key,Value>& HashMap<Key, Value, HashFunc, EqualKey>::find(const Key& key)
+//{
+//    unsigned  index = hash(key) % _size;
+//    if (table[index] == NULL) {
+//        cout << "null" << endl;
+//        HashNode<int, string>& temp = new HashNode<int, string>(-1, NULL);
+//        return nodeNULL;
+//    }
+//    else
+//    {
+//        HashNode<Key, Value> * node = table[index];
+//        while (node)
+//        {
+//            if (node->_key == key)
+//                return *node;
+//            node = node->next;
+//        }
+//    }
+//}
+//
+//
+//template <class Key, class Value, class HashFunc, class EqualKey>
+//HashNode<Key,Value>& HashMap<Key, Value, HashFunc, EqualKey>::operator [](const Key& key)
+//{
+//    return find(key);
+//}
+//
+//
+//#endif
+//
+//class HashFunc
+//{
+//public:
+//    int operator()(const int& key)
+//    {
+//        int hash = 0;
+//        hash = abs(3*key*key*key+5*key*key+7*key+11);
+//        return hash;
+//    }
+//};
+//
+//class EqualKey
+//{
+//public:
+//    bool operator()(const string& A, const string& B)
+//    {
+//        if (A.compare(B) == 0)
+//            return true;
+//        else
+//            return false;
+//    }
+//};
+//
+//int main() {
+//    int l; cin >> l; cin.get();
+//    HashMap<int, string, HashFunc, EqualKey> hashmap(100);
+//
+//    hashmap.insert(10, "cpp");
+//    hashmap.insert(5, "cat");
+//    hashmap.insert(3, "dog");
+//   // hashmap.insert("welcome", "haha");
+//    HashNode<int,string> node1 = hashmap.find(5);
+//    HashNode<int, string> node2 = hashmap.find(5);
+//    HashNode<int, string> node3 = hashmap.find(5);
+//
+//    cout << "after insert:" << endl;
+//    //cout << hashmap.find(10) << endl;
+//    //cout << hashmap.find(5) << endl;
+//   // cout << hashmap["why"].c_str() << endl;
+//   // cout << hashmap["hello"].c_str() << endl;
+//
+//    //if (hashmap.del(10))
+//    //    cout << "remove is ok" << endl;    //remove is ok
+//   // cout << hashmap.find(10).c_str() << endl; //not exist print NULL
+//
+//   // hashmap["why"] = "love";
+//   // cout << hashmap["why"].c_str() << endl;
+//    return 0;
+//}
+//void print(vector<string> arr) {
+//    int length = arr.size();
+//    for (int i = 0; i < length; i++)
+//    {
+//        cout << arr[i] << endl;
+//    }
+//}
+//void asDefault(vector<string> arr) {
+//    int length = arr.size();
+//    string temp;
+//    for (int i = 0; i < length; i++)
+//    {
+//        for (int j = 0; j +1< length-i; j++)
+//        {
+//            if (arr[j] > arr[j + 1]) {
+//                temp = arr[j];
+//                arr[j] = arr[j + 1];
+//                arr[j + 1] = temp;
+//            }
+//        }
+//    }
+//    print(arr);
+//}
+//
+//bool cmp_num(string a, string b) {
+//    int anum = atoi(a.c_str());
+//    int bnum = atoi(b.c_str());
+//    if (anum > bnum)
+//        return true;
+//    return false;
+//}
+//void asNumval(vector<string> arr) {
+//    int length = arr.size();
+//    string temp;
+//    for (int i = 0; i < length; i++)
+//    {
+//        for (int j = 0; j + 1 < length - i; j++)
+//        {
+//            if (cmp_num(arr[j] , arr[j + 1])) {
+//                temp = arr[j];
+//                arr[j] = arr[j + 1];
+//                arr[j + 1] = temp;
+//            }
+//        }
+//    }
+//    print(arr);
+//}
+//bool cmp_alpha(string a, string b) {
+//    int length = a.size() > b.size() ? b.size() : a.size();
+//    for (int i = 0,j=0; i < a.size()&&j<b.size();)
+//    {
+//        char an = a.at(i), bn = b.at(j);
+//        if (isalpha(an) && isalpha(bn)) {
+//            if ((((an - bn) == 32)|| (an - bn) == -32)) {
+//                if (an - bn > 0) return true;
+//                else if (an - bn < 0) return false;
+//                i++, j++;
+//                continue;
+//            }
+//            if ((an <= 90 && bn <= 90) || (an >= 97 && bn >= 97))
+//            {
+//                if (an - bn > 0) return true;
+//                else if (an - bn < 0) return false;
+//            }
+//            else if (an >= 97 && bn <= 90) {
+//                an -= 32;
+//                if (an - bn > 0) return true;
+//                else if (an - bn < 0) return false;
+//            }
+//            else if (bn >= 97 && an <= 90) {
+//                bn -= 32;
+//                if (an - bn > 0) return true;
+//                else if (an - bn < 0) return false;
+//            }
+//            i++, j++;
+//        }
+//        else {
+//            if (an - bn > 0) return true;
+//            else if(an - bn < 0) return false;
+//            i++, j++;
+//        }
+//    }
+//}
+//void asAlpha(vector<string> arr) {
+//    int length = arr.size();
+//    string temp;
+//    for (int i = 0; i < length; i++)
+//    {
+//        for (int j = 0; j + 1 < length - i; j++)
+//        {
+//            if (cmp_alpha(arr[j], arr[j + 1])) {
+//                temp = arr[j];
+//                arr[j] = arr[j + 1];
+//                arr[j + 1] = temp;
+//            }
+//        }
+//    }
+//    print(arr);
+//}
+//
+//bool isSuit(char an) {
+//    if (isalnum(an)) return true;
+//    if (isspace(an)) return true;
+//    if (isalpha(an)) return true;
+//    return false;
+//}
+//bool cmp_alphaAndNum(string a, string b) {
+//    int length = a.size() > b.size() ? b.size() : a.size();
+//    for (int i = 0,j=0; i < a.size()&&j<b.size();)
+//    {
+//        char an = a.at(i), bn = b.at(j);
+//        if (isSuit(an) && isSuit(bn)) {
+//            if (an - bn > 0) return true;
+//            else if (an - bn < 0) return false;
+//            i++; j++;
+//        }
+//        else if (isSuit(an)) {
+//            j++;
+//        }
+//        else if (isSuit(bn)) {
+//            i++;
+//        }
+//        else {
+//            i++, j++;
+//        }
+//    }
+//    if (a.size() > length)
+//        return true;
+//    else return false;
+//}
+//void onlyNumandAlpha(vector<string> arr) {
+//    int length = arr.size();
+//    string temp;
+//    for (int i = 0; i < length; i++)
+//    {
+//        for (int j = 0; j + 1 < length - i; j++)
+//        {
+//            if (cmp_alphaAndNum(arr[j], arr[j + 1])) {
+//                temp = arr[j];
+//                arr[j] = arr[j + 1];
+//                arr[j + 1] = temp;
+//            }
+//        }
+//    }
+//    print(arr);
+//}
+//void asReverse(vector<string> arr) {
+//    int length = arr.size();
+//    string temp;
+//    for (int i = 0; i < length; i++)
+//    {
+//        for (int j = 0; j + 1 < length - i; j++)
+//        {
+//            if (arr[j] < arr[j + 1]) {
+//                temp = arr[j];
+//                arr[j] = arr[j + 1];
+//                arr[j + 1] = temp;
+//            }
+//        }
+//    }
+//    print(arr);
+//}
+//
+//int main() {
+//    vector<string> arr;
+//    size_t n;
+//    cin >> n; cin.get();
+//    //std::cin >> std::ws;
+//    string s;
+//    for (int i = 0; i < n; i++)
+//    {
+//        getline(cin,s);
+//        arr.push_back(s);
+//    }
+//    int c;
+//    cin >> c; cin.get();
+//    //std::cin >> std::ws;
+//    string order[100];
+//    for (int i = 0; i < c; i++)
+//    {
+//        getline(cin, order[i]);
+//    }
+//    for (int i = 0; i < c; i++)
+//    {
+//        switch (order[i][0]) {
+//        case '-':
+//            asDefault(arr);
+//            break;
+//        case 'n':
+//            asNumval(arr);
+//            break;
+//        case 'i':
+//            asAlpha(arr);
+//            break;
+//        case 'd':
+//            onlyNumandAlpha(arr);
+//            break;
+//        case 'r':
+//            asReverse(arr);
+//            break;
+//        default:break;
+//        }
+//    }
+//    return 0;
+//}
 
 
 //int whichorder(char order[100]) {

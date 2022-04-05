@@ -1,7 +1,6 @@
 ﻿  源.cpp
-E:\code\c code\Project35\Project35\源.cpp(79,18): warning C4018: “>”: 有符号/无符号不匹配
-E:\code\c code\Project35\Project35\源.cpp(108,27): warning C4018: “<”: 有符号/无符号不匹配
-E:\code\c code\Project35\Project35\源.cpp(108,40): warning C4018: “<”: 有符号/无符号不匹配
-E:\code\c code\Project35\Project35\源.cpp(122,18): warning C4018: “>”: 有符号/无符号不匹配
-E:\code\c code\Project35\Project35\源.cpp(165,23): warning C4018: “<”: 有符号/无符号不匹配
+E:\code\c code\Project35\Project35\源.cpp(15,70): warning C4244: “参数”: 从“double”转换到“__int64”，可能丢失数据
+E:\code\c code\Project35\Project35\源.cpp(93,15): warning C4018: “>”: 有符号/无符号不匹配
+E:\code\c code\Project35\Project35\源.cpp(116,15): warning C4018: “>”: 有符号/无符号不匹配
+Debug\源.obj : warning LNK4042: 对象被多次指定；已忽略多余的指定
   Project35.vcxproj -> E:\code\c code\Project35\Debug\Project35.exe
