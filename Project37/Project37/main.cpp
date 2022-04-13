@@ -16,6 +16,179 @@ using namespace std;
  
 class Solution {
 public:
+	vector<string> addAlpha(vector<string> res, string src) {
+		vector<string> result;
+		if (res.size() == 0) {
+			for (char c : src) {
+				string temp = string(1,c);
+				result.push_back(temp);
+			}
+			return result;
+		}
+		for (string temp : res) {
+			for (char c : src) {
+				result.push_back(temp + c);
+			}
+		}
+		return result;
+	}
+
+	vector<string> letterCombinations(string digits) {
+		vector<string> res;
+		for (char c : digits) {
+			switch (c-'2')
+			{
+			case 0://abc
+				res=addAlpha(res, "abc");
+				break;
+			case 1://def
+				res=addAlpha(res, "def");
+				break;
+			case 2://ghi
+				res=addAlpha(res, "ghi");
+				break;
+			case 3://jkl
+				res=addAlpha(res, "jkl");
+				break;
+			case 4://mno
+				res=addAlpha(res, "mno");
+				break;
+			case 5://pqrs
+				res=addAlpha(res, "pqrs");
+				break;
+			case 6://tuv
+				res=addAlpha(res, "tuv");
+				break;
+			case 7://wxyz
+				res=addAlpha(res, "wxyz");
+				break;
+			default:
+				break;
+			}
+		}
+		return res;
+	}
+
+	string intToRoman(int num) {
+		string res = "";
+		int counth = 0,countt = 0,counti = 0;
+		while (num>0)
+		{
+			if (num >= 1000) {
+				res += 'M';
+				num -= 1000;
+			}
+			else if (num >= 900) {
+				res += "CM";
+				num -= 900;
+			}
+			else if (num >= 500) {
+				res += "D";
+				num -= 500;
+			}
+			else if (num >= 400) {
+				res += "CD";
+				num -= 400;
+			}
+			else if (num >= 100) {
+				res += "C";
+				num -= 100;
+			}
+			else if (num >= 90) {
+				res += "XC";
+				num -= 90;
+			}
+			else if (num >= 50) {
+				res += "L";
+				num -= 50;
+			}
+			else if (num >= 40) {
+				res += "XL";
+				num -= 40;
+			}
+			else if (num >= 10) {
+				res += "X";
+				num -= 10;
+			}
+			else if (num >= 9) {
+				res += "IX";
+				num -= 9;
+			}
+			else if (num >= 5) {
+				res += "V";
+				num -= 5;
+			}
+			else if (num >= 4) {
+				res += "IV";
+				num -= 4;
+			}
+			else{
+				res += "I";
+				num --;
+			}
+		};
+		return res;
+	}
+
+	bool isIsomorphic(string s, string t) {
+		int arr1[256],arr2[256];
+		for (int i = 0; i < 256; i++)
+		{
+			arr1[i] = -1;
+			arr2[i] = -1;
+		}
+		for (int i = 0; i < s.length(); i++)
+		{
+			if (arr1[s.at(i)]==-1&&arr2[t.at(i)]==-1) {
+				arr1[s.at(i)] = t.at(i);
+				arr2[t.at(i)] = s.at(i);
+			}
+			else {
+				if (arr1[s.at(i)] != t.at(i)|| arr2[t.at(i)] != s.at(i))
+					return false;
+			}
+		}
+		return true;
+	}
+
+	bool isHappy(int n) {
+		int fast = n;
+		int slow = n;
+		do {
+			slow = squareSum(slow);
+			fast = squareSum(fast);
+			fast = squareSum(fast);
+		} while (slow != fast);
+		if (fast == 1)
+			return true;
+		else return false;
+	}
+
+	int squareSum(int m) {
+		int squaresum = 0;
+		while (m != 0) {
+			squaresum += (m % 10) * (m % 10);
+			m /= 10;
+		}
+		return squaresum;
+	}
+
+	vector<int> numberOfLines(vector<int>& widths, string s) {
+		int length = 0,count=0;
+		for (char c : s) {
+			int simple = widths[c - 'a'];
+			if (simple+length >= 100) {
+				length = 0;
+				count++;
+			}
+			length += simple;
+		}
+		vector<int> res;
+		res.push_back(count+1);
+		res.push_back(length);
+		return res;
+	}
+
 	int majorityElement(vector<int>& nums) {
 		int res = -9999,count=1;
 		for (int i : nums) {
