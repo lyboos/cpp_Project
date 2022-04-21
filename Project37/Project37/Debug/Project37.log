@@ -1,2 +1,5 @@
 ﻿  main.cpp
+E:\code\c code\Project37\Project37\main.cpp(22,21): warning C4018: “<”: 有符号/无符号不匹配
+E:\code\c code\Project37\Project37\main.cpp(25,22): warning C4018: “<”: 有符号/无符号不匹配
+E:\code\c code\Project37\Project37\main.cpp(197,21): warning C4018: “<”: 有符号/无符号不匹配
   Project37.vcxproj -> E:\code\c code\Project37\Debug\Project37.exe

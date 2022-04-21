@@ -16,6 +16,50 @@ using namespace std;
  
 class Solution {
 public:
+
+	int countSubstrings(string s) {
+
+	}
+
+	bool isPa(string s) {
+		/*int length = s.length();
+		if (length < 2) return true;
+		if (length == 2) return s[0] == s[1];
+		else {
+			if (s[length - 1] == s[0]) {
+				return isPa(s.substr(1, length - 2));
+			}
+			else return false;
+		}*/
+		int length = s.length();
+		if (length < 2) return true;
+		if (length == 2) return s[0] == s[1];
+		int left = 0, right = length - 1;
+		while (left<right)
+		{
+			if (s[left] != s[right])
+				return false;
+			left++; right--;
+		}
+		return true;
+	}
+
+	string longestPalindrome(string s) {
+		int len = s.length();
+		if (len < 2) return s;
+		int begin = 0, maxLen=1;
+		for (int i = 0; i < len-1;i++) {
+			for (int j = i+1; j < len; j++)
+			{
+				if (j - i + 1 > maxLen && isPa(s.substr(i, j-i+1))) {
+					begin = i;
+					maxLen = j - i + 1;
+				}
+			}
+		}
+		return s.substr(begin,maxLen);
+	}
+
 	vector<string> addAlpha(vector<string> res, string src) {
 		vector<string> result;
 		if (res.size() == 0) {
@@ -311,5 +355,10 @@ int main() {
 	cout << a << endl;
 	cin >> temp;
 	cout << a << endl;*/
+	Solution s; string str;
+	while (cin >> str)
+	{
+		printf(s.longestPalindrome(str).c_str());
+	}
 	return 0;
 }
