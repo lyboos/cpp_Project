@@ -4,7 +4,7 @@
 #include<string>
 #include<string.h>
 #include<stdio.h>
-
+#include<algorithm>
 using namespace std;
 
 
@@ -16,9 +16,50 @@ using namespace std;
  
 class Solution {
 public:
+	int findNumberOfLIS(vector<int>& nums) {
+		
+	
+	}
+	int findlengthOfLIS(vector<int>& nums) {
+		int length[100001];
+		length[0] = 1;
+		int maxnum = 1;
+		for (int i = 1; i < nums.size(); i++)
+		{
+			int maxlength = 1;
+			for (int j = 0; j < i; j++)
+			{
+				if (maxlength < length[j]) {
+					if (nums[i] > nums[j]) {
+						maxlength = length[j] + 1;
+					}
+				}
+			}
+			maxnum = max(maxlength, maxnum);
+			length[i] = maxlength;
+		}
+		return maxnum;
+	}
 
-	int countSubstrings(string s) {
-
+	string convert(string s, int numRows) {
+		vector<string> temp(numRows);
+		string res;
+		if (s.empty() || numRows < 1) return res;
+		if (numRows == 1) return s;
+		for (int i = 0; i < s.size(); i++) {
+			int ans = i / (numRows - 1);
+			int cur = i % (numRows - 1);
+			if (ans % 2 == 0) {  //结果为偶数或0
+				temp[cur].push_back(s[i]); //按余数正序保存
+			}
+			if (ans % 2 != 0) {  //结果为奇数
+				temp[numRows - cur - 1].push_back(s[i]); //按余数倒序保存
+			}
+		}
+		for (int i = 0; i < temp.size(); i++) {
+			res += temp[i];
+		}
+		return res;
 	}
 
 	bool isPa(string s) {
